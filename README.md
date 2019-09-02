@@ -280,3 +280,78 @@ ga_domain: huangxuan.me			# 默认的是 auto, 这里我是自定义了的域名
 
 遵循 MIT 许可证。有关详细,请参阅 [LICENSE](https://github.com/qiubaiying/qiubaiying.github.io/blob/master/LICENSE)。
 
+
+## 备录内容
+怎么在ubuntu server 上搭建git服务器，以腾讯云为例
+以下步骤最好使用管理员权限进行，避免某些步骤出现没有权限的问题
+安装git的核心 git core
+cd ~
+1. sudo apt-get install git-core openssh-server openssh-client
+上面的命令安装失败的话，需要更新数据源
+2. sudo aot-get update 再重新执行第一条命令即可
+3. sudo apt-get install python-setuptools 
+安装python的 setuptools 和gitosis
+4. 配置给git用户信息
+git config --global user.name "name"
+git config --global user.email "Email"
+接着安装gitosis
+5. git clone https://github.com/res0nat0r/gitosis.git
+进入gitosis里面 cd gitosis
+6. sudo python setup.py install
+接下来对git进行一些基本的配置
+cd ~/gitosis
+7. sudo useradd -m git
+8. sudo passwd git 设置的密码记住
+9. sudo mkdir /home/gitrepository
+10. sudo chown git:git /home/gitrepository/
+11. sudo chmod 700 /home/gitrepository/
+cd /home/git
+12. sudo ln -s /home/gitrepository /home/git/repositories
+接下来再自己的window10 机器里面生成密钥ssh 》 ssh-keygen -t rsa
+使用winscp链接云服务器，一般只需要把实例的用户名和密码填上就好了，但是也会出现链接被拒绝的情况
+1. 查看云服务去的22端口有没有打开
+2. sudo /etc/init.d/ssh restart
+3. sudo vi /etc/ssh/ssh_config或者sudo vi /etc/ssh/sshd_config 把PermitRootLogin no 改成yes
+重启sshd服务就可以链接
+4. service sshd restart
+把刚刚再Windows10 上生成的密钥传到服务器上
+接着回到服务器，使用密钥对服务器上的rsa进行初始化
+cd /home/git
+13. sudo -H -u git gitosis-init < /tmp/xjy.pub
+14. sudo chmod 755 /home/gitrepository/gitosis-admin.git/hooks/post-update
+使用git账户创建项目仓库和目录
+15. su git
+16. cd /home/gitrepository
+17. mkdir mytask.git
+18. cd mytask.git
+19. git init --bare
+20. exit
+回到客户机上，打开git bash
+测试可以直接远程操控 shh 用户名@IP地址
+21. git clone git@公网IP:/gitosis-admin.git 用户名就是登陆进去实例的时候的用户名
+22. 文件夹下包含两个文件，gitisos.conf用于配置权限，keydir用来存放shh公钥文件
+[group gitosis-admin]
+members = geekli@DESKTOP-01RHDFO
+writable = gitosis-admin mytask
+[group geeklh]
+members = geeklh
+writable = mytask
+[group readonly]
+members = read
+readonly = test
+members 为用户名 与.pub文件对应 多个用户以空格隔开
+
+writable 可写项目组 ，以空格隔开
+
+readonly 只读项目组，以空格隔开
+
+接着再提交到服务器上：
+git add . 
+git commit -m "add new"
+git push origin master
+
+新增用户不生效？重启SSH服务：sudo /etc/init.d/ssh restart
+
+最后就可以进行clone了  git clone git@公网IP:/mytask.git
+已经实验过了，可以正常的check out 和push到master
+
