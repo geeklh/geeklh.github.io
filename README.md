@@ -355,3 +355,6 @@ git push origin master
 最后就可以进行clone了  git clone git@公网IP:/mytask.git
 已经实验过了，可以正常的check out 和push到master
 
+Ubuntu系统链接出现Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+解决：
+主要原因是之前电脑有链接过服务器，服务器把登录标识证书记录下来了，下次登录时会对比之前的记录，由于服务器的系统重装表示变了，导致不能继续登录，解决方案就是执行ssh-kengen -R 服务器公网IP，即可解决这个问题，然后再执行ssh 用户名@公网IP，即可链接成功。
