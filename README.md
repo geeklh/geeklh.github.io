@@ -396,7 +396,7 @@ Velocity
 RequestMapping 可以作用在控制器上某个方法，也可以作用在此控制器类上。
 当控制器在类级别上添加@RequestMapping注解时，这个注解会应用到控制器的所有处理器方法上。处理器方法上的@RequestMapping注解会对类级别上的@RequestMapping的声明进行补充。
 
-1，@Controller表明该类所有的方法返回页面路径，但是在方法上加了@ResponseBody后，该方法返回的是数据。《《======
+1，@Controller表明该类所有的方法返回页面路径，但是在方法上加了@ResponseBody后，该方法返回的是数据。
 2，@RestController则相当于@Controller和@ResponseBody同时使用的效果，返回的也是数据，不是界面
 3，如果我们还想返回界面可以使用ModelAndView方法
 
