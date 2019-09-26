@@ -361,7 +361,7 @@ Ubuntu系统链接出现Someone could be eavesdropping on you right now (man-in-
 
 
 ## spring boot 内容
-# 常用注解
+### 常用注解
 @SpringBootApplication 通常用于启动类，相当于同时加上
 
 @MapperScan 在springBoot中集成mybatis，可以在mapper接口上添加@mapper注解，将mapper注入到spring；使用MapperScan来扫描包
@@ -403,8 +403,8 @@ RequestMapping 可以作用在控制器上某个方法，也可以作用在此�
     1、@RequestBody需要把所有请求参数作为json解析，因此，不能包含key=value这样的写法在请求url中，所有的请求参数都是一个json
     2、直接通过浏览器输入url时，@RequestBody获取不到json对象，需要用java编程或者基于ajax的方法请求，将Content-Type设置为application/json
 
-##理解什么是spring boot的bean
-#什么是bean？
+## 理解什么是spring boot的bean
+#### 什么是bean？
 1、Java面向对象，对象有方法和属性，就需要对象实例来调用方法和实例（实例化）
 2、凡是有方法和属性的类都需要实例化，这样才能具象化去使用这些方法和属性
 3、把bean理解成类的代理（通过反射、代理来实现），这样就能代表类该拥有的东西
