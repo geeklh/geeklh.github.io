@@ -396,22 +396,21 @@ Velocity
 RequestMapping 可以作用在控制器上某个方法，也可以作用在此控制器类上。
 当控制器在类级别上添加@RequestMapping注解时，这个注解会应用到控制器的所有处理器方法上。处理器方法上的@RequestMapping注解会对类级别上的@RequestMapping的声明进行补充。
 
-1，@Controller表明该类所有的方法返回页面路径，但是在方法上加了@ResponseBody后，该方法返回的是数据。
-2，@RestController则相当于@Controller和@ResponseBody同时使用的效果，返回的也是数据，不是界面
-3，如果我们还想返回界面可以使用ModelAndView方法
-
-    1、@RequestBody需要把所有请求参数作为json解析，因此，不能包含key=value这样的写法在请求url中，所有的请求参数都是一个json
-    2、直接通过浏览器输入url时，@RequestBody获取不到json对象，需要用java编程或者基于ajax的方法请求，将Content-Type设置为application/json
+1. @Controller表明该类所有的方法返回页面路径，但是在方法上加了@ResponseBody后，该方法返回的是数据。
+2. @RestController则相当于@Controller和@ResponseBody同时使用的效果，返回的也是数据，不是界面
+3. 如果我们还想返回界面可以使用ModelAndView方法
+4. @RequestBody需要把所有请求参数作为json解析，因此，不能包含key=value这样的写法在请求url中，所有的请求参数都是一个json
+5. 直接通过浏览器输入url时，@RequestBody获取不到json对象，需要用java编程或者基于ajax的方法请求，将Content-Type设置为application/json
 
 ## 理解什么是spring boot的bean
 #### 什么是bean？
-1、Java面向对象，对象有方法和属性，就需要对象实例来调用方法和实例（实例化）
-2、凡是有方法和属性的类都需要实例化，这样才能具象化去使用这些方法和属性
-3、把bean理解成类的代理（通过反射、代理来实现），这样就能代表类该拥有的东西
+1. Java面向对象，对象有方法和属性，就需要对象实例来调用方法和实例（实例化）
+2. 凡是有方法和属性的类都需要实例化，这样才能具象化去使用这些方法和属性
+3. 把bean理解成类的代理（通过反射、代理来实现），这样就能代表类该拥有的东西
 
-1、一类是使用Bean，即是把已经在xml文件中配置好的Bean拿来用，完成属性、方法的组装；比如@Autowired , @Resource，可以通过byTYPE（@Autowired）、byNAME（@Resource）的方式获取Bean；
+1. 一类是使用Bean，即是把已经在xml文件中配置好的Bean拿来用，完成属性、方法的组装；比如@Autowired , @Resource，可以通过byTYPE（@Autowired）、byNAME（@Resource）的方式获取Bean；
 
-2、一类是注册Bean,@Component , @Repository , @ Controller , @Service , @Configration这些注解都是把你要实例化的对象转化成一个Bean，放在IoC容器中，等你要用的时候，它会和上面的@Autowired , @Resource配合到一起，把对象、属性、方法完美组装。
+2. 一类是注册Bean,@Component , @Repository , @ Controller , @Service , @Configration这些注解都是把你要实例化的对象转化成一个Bean，放在IoC容器中，等你要用的时候，它会和上面的@Autowired , @Resource配合到一起，把对象、属性、方法完美组装。
 源码：
 <pre class="code">
 
@@ -428,9 +427,32 @@ RequestMapping 可以作用在控制器上某个方法，也可以作用在此�
 @Bean明确地指示了一种方法，产生一个bean方法，并且交给sping容器管理。被注释的方法，你给我产生一个bean，然后交给spring容器，剩下的你就别管了。
 
 对bean的总结：
-1、凡是子类以及带属性、方法的类被注册bean到spring中，交给spring容器来管理；
-2、@Bean用在方法上，告诉spring容器，可以从下面这个方法中拿到一个bean
+1. 凡是子类以及带属性、方法的类被注册bean到spring中，交给spring容器来管理；
+2. @Bean用在方法上，告诉spring容器，可以从下面这个方法中拿到一个bean
 
 
 ## spring boot记录
+### 概述：spring包括ioc容器，aop,数据访问、web开发、消息、测试等相关技术的支持。
+### 基础配置：
+spring本身有四大原则：
+1. 使用POJO进行轻量级和最小侵入式开发。
+2. 通过依赖注入和基于接口编程实现松耦合。
+3. 通过AOP和默认习惯进行声明式编程。
+4. 使用AOP和模板减少模式化代码。
+
+### spring的依赖注入
+其最大亮点是所有的bean对spring容器的存在是没有意识，可以将容器替换成别的容器，这时bean之间的耦合度很低。
+
+### 常用注解
+1. @Controller
+@Controller注解在类上，表明这个类是Spring MVC里的 Controller，将其声明为Spring的一个Bean，Dispatcher Servlet 会自动扫描注解了此注解的类，并将Web请求映射到注解 了@RequestMapping的方法上。特别注意，在声明普通 Bean的时候，使用@Component、@Service、@Repository和 @Controller是等同的，因为@Service、@Repository、@Controller都组合了@Compoment元注解；但在Spring MVC声明控制器Bean的时候，只能使用@Controller。
+
+2. @RequestMapping
+@RequestMapping注解是用来映射Web请求（访问路径和 参数）、处理类和方法的。@RequestMapping可注解在类或方法上。注解在方法上的@RequestMapping路径会继承注解在类 上的路径，@RequestMapping支持Servlet的request和response作 为参数，也支持对request和response的媒体类型进行配置
+
+
+
+
+
+
 
