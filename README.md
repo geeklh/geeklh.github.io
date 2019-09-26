@@ -1,4 +1,4 @@
-
+﻿
 
 ![](https://raw.githubusercontent.com/qiubaiying/qiubaiying.github.io/master/img/readme-home.png)
 
@@ -288,7 +288,7 @@ ga_domain: huangxuan.me			# 默认的是 auto, 这里我是自定义了的域名
 cd ~
 1. sudo apt-get install git-core openssh-server openssh-client
 上面的命令安装失败的话，需要更新数据源
-2. sudo aot-get update 再重新执行第一条命令即可
+2. sudo apt-get update 再重新执行第一条命令即可
 3. sudo apt-get install python-setuptools 
 安装python的 setuptools 和gitosis
 4. 配置给git用户信息
@@ -358,3 +358,79 @@ git push origin master
 Ubuntu系统链接出现Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 解决：
 主要原因是之前电脑有链接过服务器，服务器把登录标识证书记录下来了，下次登录时会对比之前的记录，由于服务器的系统重装表示变了，导致不能继续登录，解决方案就是执行ssh-kengen -R 服务器公网IP，即可解决这个问题，然后再执行ssh 用户名@公网IP，即可链接成功。
+
+
+##spring boot 内容
+#常用注解
+@SpringBootApplication 通常用于启动类，相当于同时加上
+
+@MapperScan 在springBoot中集成mybatis，可以在mapper接口上添加@mapper注解，将mapper注入到spring；使用MapperScan来扫描包
+=>@MapperScan("com.demo.mapper")：扫描指定包中的接口
+
+@MapperScan("com.demo.*.mapper")：一个*代表任意字符串，但只代表一级包,比如可以扫到com.demo.aaa.mapper,不能扫到com.demo.aaa.bbb.mapper
+
+@MapperScan("com.demo.**.mapper")：两个*代表任意个包,比如可以扫到com.demo.aaa.mapper,也可以扫到com.demo.aaa.bbb.mapper
+
+
+ @Service("userService")/@Service(value = "userService")
+@Service("userService")注解是告诉Spring，当Spring要创建UserServiceImpl的的实例时，bean的名字必须叫做"userService"，这样当Action需要使用UserServiceImpl的的实例时,就可以由Spring创建好的"userService"，然后注入给Action：在Action只需要声明一个名字叫“userService”的变量来接收由Spring注入的"userService"即可
+
+@Autowired 表示被修饰的类需要注入对象，springihui扫描而所有被Autowired标注的类，然后根据类型在ioc容器中找到匹配的类注入
+
+@Override，编辑器帮助验证@Override下面的方法名是否是父类中所有的，如果没有就报错。
+在代码中重载后者重写方法时会用到
+重载：方法名一样，但是参数类型或者个数会不一样，返回值可以相同也可以不同。
+重写：子类对于父类方法的继承，在此基础上对部分方法进行修改。新方法会直接覆盖旧的
+
+@Controller 处理HTTP请求
+直接在项目中直接用Controller，然后再请求，就会发生Whitelabel Error Page
+是因为没有使用模板，使用Controller是用来相应页面的，Controller必须配合模板来使用
+FreeMarker
+Groovy
+Thymeleaf （Spring 官网使用这个）
+Velocity
+
+注意：@RestController新加入注解，返回的json需要@ResponseBody和@Controller配合
+
+@RequestMapping 配置url映射
+RequestMapping 可以作用在控制器上某个方法，也可以作用在此控制器类上。
+当控制器在类级别上添加@RequestMapping注解时，这个注解会应用到控制器的所有处理器方法上。处理器方法上的@RequestMapping注解会对类级别上的@RequestMapping的声明进行补充。
+
+1，@Controller表明该类所有的方法返回页面路径，但是在方法上加了@ResponseBody后，该方法返回的是数据。《《======
+2，@RestController则相当于@Controller和@ResponseBody同时使用的效果，返回的也是数据，不是界面
+3，如果我们还想返回界面可以使用ModelAndView方法
+
+    1、@RequestBody需要把所有请求参数作为json解析，因此，不能包含key=value这样的写法在请求url中，所有的请求参数都是一个json
+    2、直接通过浏览器输入url时，@RequestBody获取不到json对象，需要用java编程或者基于ajax的方法请求，将Content-Type设置为application/json
+
+##理解什么是spring boot的bean
+#什么是bean？
+1、Java面向对象，对象有方法和属性，就需要对象实例来调用方法和实例（实例化）
+2、凡是有方法和属性的类都需要实例化，这样才能具象化去使用这些方法和属性
+3、把bean理解成类的代理（通过反射、代理来实现），这样就能代表类该拥有的东西
+
+1、一类是使用Bean，即是把已经在xml文件中配置好的Bean拿来用，完成属性、方法的组装；比如@Autowired , @Resource，可以通过byTYPE（@Autowired）、byNAME（@Resource）的方式获取Bean；
+
+2、一类是注册Bean,@Component , @Repository , @ Controller , @Service , @Configration这些注解都是把你要实例化的对象转化成一个Bean，放在IoC容器中，等你要用的时候，它会和上面的@Autowired , @Resource配合到一起，把对象、属性、方法完美组装。
+源码：
+<pre class="code">
+
+     @Bean
+
+     public MyBean myBean() {
+
+         // instantiate and configure MyBean obj
+
+         return obj;
+
+    }</pre>
+
+@Bean明确地指示了一种方法，产生一个bean方法，并且交给sping容器管理。被注释的方法，你给我产生一个bean，然后交给spring容器，剩下的你就别管了。
+
+对bean的总结：
+1、凡是子类以及带属性、方法的类被注册bean到spring中，交给spring容器来管理；
+2、@Bean用在方法上，告诉spring容器，可以从下面这个方法中拿到一个bean
+
+
+##spring boot记录
+
