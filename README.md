@@ -360,8 +360,8 @@ Ubuntu系统链接出现Someone could be eavesdropping on you right now (man-in-
 主要原因是之前电脑有链接过服务器，服务器把登录标识证书记录下来了，下次登录时会对比之前的记录，由于服务器的系统重装表示变了，导致不能继续登录，解决方案就是执行ssh-kengen -R 服务器公网IP，即可解决这个问题，然后再执行ssh 用户名@公网IP，即可链接成功。
 
 
-##spring boot 内容
-#常用注解
+## spring boot 内容
+# 常用注解
 @SpringBootApplication 通常用于启动类，相当于同时加上
 
 @MapperScan 在springBoot中集成mybatis，可以在mapper接口上添加@mapper注解，将mapper注入到spring；使用MapperScan来扫描包
@@ -432,5 +432,5 @@ RequestMapping 可以作用在控制器上某个方法，也可以作用在此�
 2、@Bean用在方法上，告诉spring容器，可以从下面这个方法中拿到一个bean
 
 
-##spring boot记录
+## spring boot记录
 
