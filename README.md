@@ -462,6 +462,32 @@ spring本身有四大原则：
 6. @RestController
 @RestController是一个组合注解，组合了@Controller和 @ResponseBody，这就意味着当你只开发一个和页面交互数据 的控制的时候，需要使用此注解。若没有此注解，要想实现上 述功能，则需自己在代码中加@Controller和@ResponseBody两 个注解
 
+### 实践
+1. 传值类
+private Integer id;
+public Integer getId() {return id;}
+public void setId(Integer id) {this.id = id;}
+jackson对对象和json做转换时一定需要此空结构。
+
+2. 注解演示控制器
+@Controller加在类名上=>注解声明此类是一个控制器。
+
+@RequestMapping("/anno")映射此类的访问路径是/anno
+
+@ResponseBody
+public MyResult login(@RequestBody User user) {return userService.login(user);}
+@ResponseBody用在返回值前面，这样可接受HttpServletReques作为参数，当然也可以接收HttpServletReponse作为参数。
+
+@RequestMapping(value="/pathvar/{str}",produces="text8")
+public @ResponseBody String demoPathVar(@PathVariable String str,             HttpServletRequest request) {return "url:" + request.getRequestURL() + " can access,str:"} 
+接受路径参数，并在方法参数前结合@PathVariable使用，访问路径为/anno/pathvar/xx
+
+@RequestMapping(value="/requestParam",produces="{"application/json;charset=UTF-8"}")
+public @ResponserBody String passRequestParam(long id,HttpServletRequest request ){ return "url:" + request.getRequestURL() + " can access}
+常规的request参数获取，访问路径为/anno/requestParam?id=1
+
+@RequestMapping(value={"/name1","/name2"},produces="{"application/json;charset=UTF-8"}")
+public @ResponseBody String remove(......)
 
 
 
