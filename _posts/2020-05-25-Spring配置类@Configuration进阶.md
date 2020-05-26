@@ -669,8 +669,6 @@ Lite模式下表现如何？
 
 Lite模式下可没这些“加强特性”，所以在Lite模式下（拿掉@Configuration这个注解便可）运行以上程序，结果输出为：  
 
-Lite模式下可没这些“加强特性”，所以在Lite模式下（拿掉@Configuration这个注解便可）运行以上程序，结果输出为：
-
 我使用@Bean定义sonFactoryBean：477289012  
 我使用@Bean定义sonFactoryBean identityHashCode：477289012  
 
