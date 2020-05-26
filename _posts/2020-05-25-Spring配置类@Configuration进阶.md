@@ -688,12 +688,7 @@ Spring容器内的SonFactoryBean：477289012
 Spring容器内的SonFactoryBean：class com.handsomegeekli.fullliteconfig.config.SonFactoryBean  
 Spring容器内的Son：211968962  
 
-结果解释我就不再啰嗦，有了前面的基础就太容易理解了,这里在解释，我就成真傻了。  
-
-为何是@Scope域代理就不用处理？  
-要解释好这个原因，和@Scope代理方式的原理知识强相关。限于篇幅，本文就先卖个关子~  
-
-关于@Scope我个人觉得足够用5篇以上文章专题讲解，虽然在Spring Framework里使用得比较少，但是在理解Spirng Cloud的自定义扩展实现上显得非常非常有必要，所以你可关注我公众号，会近期推出相关专栏的。    
+结果解释我就不再啰嗦，有了前面的基础就太容易理解了。
 
 ### 总结
 
